@@ -1,37 +1,32 @@
+// index.js - Discord Bot Ready for Railway
+
 const { Client, GatewayIntentBits } = require("discord.js");
 
+// Create a new Discord client
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ]
 });
 
-client.on("ready", () => {
-  console.log("Bot is online!");
+// When the bot is ready
+client.once("ready", () => {
+    console.log(`Bot is online! Logged in as ${client.user.tag}`);
 });
 
+// Simple command example
 client.on("messageCreate", message => {
-  if (message.content === "!ping") {
-    message.reply("Pong!");
-  }
+    if (message.author.bot) return; // Ignore other bots
+
+    // Example command: !ping
+    if (message.content.toLowerCase() === "!ping") {
+        message.channel.send("Pong!");
+    }
+
+    // You can add more commands here
 });
 
-client.login("MTQ4MDQxMDMxNzA5OTExMDQ5Mg.GZwxLZ.F4br8hy2Sm4JvC8Qmcgb4PEc_kt7ShhdTMl6RE");
-const { Client, GatewayIntentBits } = require("discord.js");
-
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
-
-client.on("ready", () => {
-  console.log("Bot is online!");
-});
-
-// Existing code / commands
-client.on("messageCreate", message => {
-  // Your previous code commands
-});
-
-// Add new commands if needed
-client.on("messageCreate", message => {
-  if (message.content === "!ping") message.reply("Pong!");
-});
-
-// Login using the environment variable
+// Login using your Railway environment variable
 client.login(process.env.DISCORD_BOT_TOKEN);
